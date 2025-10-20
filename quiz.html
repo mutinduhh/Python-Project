@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OkoaSem - Quiz Platform</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-pattern {
+            background-image: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.1) 0%, rgba(255,255,255,1) 90%);
+        }
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i data-feather="award" class="text-primary h-8 w-8"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-900">OkoaSem</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center space-x-8">
+                    <a href="#" class="text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Quizzes</a>
+                    <a href="#" class="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Leaderboard</a>
+                    <a href="#" class="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Account</a>
+                </div>
+                <div class="flex items-center">
+                    <button id="loginBtn" class="bg-primary hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        Login / Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-pattern">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 lg:py-24">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                    <span class="block">Test Your Knowledge with</span>
+                    <span class="block text-primary">OkoaSem Quizzes</span>
+                </h1>
+                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    Challenge yourself with our carefully curated quizzes across Mathematics, English, Computer Science and General Science for O-Level, A-Level and University students.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <div class="inline-flex rounded-md shadow">
+                        <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-700">
+                            Start Quiz Now
+                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subjects Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900">Choose Your Subject</h2>
+            <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                Select from our comprehensive list of subjects tailored for your academic level
+            </p>
+        </div>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <!-- Math Card -->
+            <div class="quiz-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="p-6">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary mb-4">
+                        <i data-feather="divide-square" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">Mathematics</h3>
+                    <p class="mt-2 text-sm text-gray-500">
+                        Algebra, Calculus, Geometry and more for all academic levels
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-primary hover:text-primary-700 text-sm font-medium">
+                            Take Quiz <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English Card -->
+            <div class="quiz-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="p-6">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-secondary-100 text-secondary mb-4">
+                        <i data-feather="book" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">English</h3>
+                    <p class="mt-2 text-sm text-gray-500">
+                        Grammar, Literature, Comprehension and vocabulary building
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-secondary hover:text-secondary-700 text-sm font-medium">
+                            Take Quiz <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Computer Science Card -->
+            <div class="quiz-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="p-6">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
+                        <i data-feather="cpu" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">Computer Science</h3>
+                    <p class="mt-2 text-sm text-gray-500">
+                        Programming, Algorithms, Data Structures and Computer Fundamentals
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            Take Quiz <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Science Card -->
+            <div class="quiz-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="p-6">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-600 mb-4">
+                        <i data-feather="flask" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">General Science</h3>
+                    <p class="mt-2 text-sm text-gray-500">
+                        Physics, Chemistry, Biology and Earth Sciences across all levels
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-red-600 hover:text-red-800 text-sm font-medium">
+                            Take Quiz <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                <div>
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary-100">
+                        <i data-feather="user" class="h-6 w-6 text-primary"></i>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Login to OkoaSem</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                Enter your details to access all quizzes and track your progress.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <form>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name *</label>
+                                <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                            </div>
+                        </div>
+                        <div class="mt-5 sm:mt-6">
+                            <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm">
+                                Sign In / Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-4">OkoaSem</h3>
+                    <p class="text-gray-300 text-sm">
+                        Helping students prepare for exams through quick, practice testing and instant feedback.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Subjects</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Mathematics</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">English</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Computer Science</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">General Science</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Levels</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">O-Level (14-16)</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">A-Level (16-18)</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">University (18+)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i data-feather="facebook" class="h-5 w-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i data-feather="twitter" class="h-5 w-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i data-feather="linkedin" class="h-5 w-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i data-feather="instagram" class="h-5 w-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700">
+                <p class="text-gray-300 text-sm text-center">
+                    &copy; 2023 OkoaSem. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Login modal toggle
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.toggle('hidden');
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+
+        // Initialize feather icons
+        feather.replace();
+    </script>
+</body>
+</html>
