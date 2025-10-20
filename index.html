@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | OkoaSem</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .option-item:hover {
+            background-color: #EDE9FE;
+        }
+        .option-item.selected {
+            background-color: #4F46E5;
+            color: white;
+        }
+        .option-item.correct {
+            background-color: #10B981;
+            color: white;
+        }
+        .option-item.incorrect {
+            background-color: #EF4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i data-feather="award" class="text-primary h-8 w-8"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-900">OkoaSem</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex items-center">
+                        <span class="text-gray-600 text-sm mr-2">Time: <span id="timer">20:00</span></span>
+                        <div class="relative pt-1 w-32">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold inline-block text-gray-600">
+                                    Progress
+                                </span>
+                                <span class="text-xs font-semibold inline-block text-gray-600">
+                                    <span id="currentQuestion">1</span>/20
+                                </span>
+                            </div>
+                            <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
+                                <div id="progressBar" class="progress-bar shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary" style="width: 5%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quiz Container -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <!-- Quiz Header -->
+            <div class="bg-primary px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-white" id="quizSubject">Mathematics - O-Level</h2>
+                        <p class="text-primary-100 text-sm">Question <span id="questionNumber">1</span> of 20</p>
+                    </div>
+                    <div class="text-white">
+                        <span class="text-sm">Score: <span id="quizScore">0</span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Content -->
+            <div class="p-6">
+                <div class="mb-8">
+                    <h3 class="text-lg font-medium text-gray-900" id="questionText">What is the value of π (pi) rounded to two decimal places?</h3>
+                </div>
+
+                <!-- Options -->
+                <div class="space-y-3" id="optionsContainer">
+                    <div class="option-item p-3 border border-gray-200 rounded-md cursor-pointer transition" data-option="1">
+                        A) 3.14
+                    </div>
+                    <div class="option-item p-3 border border-gray-200 rounded-md cursor-pointer transition" data-option="2">
+                        B) 3.16
+                    </div>
+                    <div class="option-item p-3 border border-gray-200 rounded-md cursor-pointer transition" data-option="3">
+                        C) 3.18
+                    </div>
+                    <div class="option-item p-3 border border-gray-200 rounded-md cursor-pointer transition" data-option="4">
+                        D) 3.20
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="mt-8 flex justify-between">
+                    <button id="prevBtn" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50" disabled>
+                        <i data-feather="arrow-left" class="mr-2 h-4 w-4"></i> Previous
+                    </button>
+                    <button id="nextBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Next <i data-feather="arrow-right" class="ml-2 h-4 w-4"></i>
+                    </button>
+                    <button id="submitBtn" class="hidden inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Submit Quiz <i data-feather="check" class="ml-2 h-4 w-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div id="resultsModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div>
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100">
+                        <i data-feather="award" class="h-8 w-8 text-green-600"></i>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Quiz Completed!</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                You scored <span id="finalScore" class="font-bold text-green-600">85%</span> on this quiz.
+                            </p>
+                            <div class="mt-4">
+                                <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
+                                    <div id="scoreBar" class="h-full bg-green-500" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                                <div class="bg-blue-50 p-2 rounded">
+                                    <div class="text-blue-800 font-bold" id="correctCount">17</div>
+                                    <div class="text-blue-600">Correct</div>
+                                </div>
+                                <div class="bg-red-50 p-2 rounded">
+                                    <div class="text-red-800 font-bold" id="incorrectCount">3</div>
+                                    <div class="text-red-600">Incorrect</div>
+                                </div>
+                                <div class="bg-gray-50 p-2 rounded">
+                                    <div class="text-gray-800 font-bold" id="timeTaken">15:32</div>
+                                    <div class="text-gray-600">Time Taken</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6">
+                    <button id="reviewBtn" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                        Review Answers
+                    </button>
+                    <button id="newQuizBtn" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm">
+                        Take Another Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample quiz data (in a real app, this would come from an API)
+        const quizData = {
+            subject: "Mathematics",
+            level: "O-Level",
+            questions: [
+                {
+                    question: "What is the value of π (pi) rounded to two decimal places?",
+                    options: ["3.14", "3.16", "3.18", "3.20"],
+                    answer: 0
+                },
+                // More questions would be here...
+            ],
+            timeLimit: 20 // minutes
+        };
+
+        // Quiz state
+        let currentQuestion = 0;
+        let selectedOptions = [];
+        let score = 0;
+        let timeLeft = quizData.timeLimit * 60; // seconds
+        let timerInterval;
+
+        // Initialize quiz
+        function initQuiz() {
+            document.getElementById('quizSubject').textContent = `${quizData.subject} - ${quizData.level}`;
+            updateQuestion();
+            startTimer();
+            
+            // Add event listeners
+            document.querySelectorAll('.option-item').forEach(item => {
+                item.addEventListener('click', selectOption);
+            });
+            
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('submitBtn').addEventListener('click', showResults);
+            document.getElementById('reviewBtn').addEventListener('click', reviewAnswers);
+            document.getElementById('newQuizBtn').addEventListener('click', startNewQuiz);
+        }
+
+        // Update question display
+        function updateQuestion() {
+            const question = quizData.questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option-item p-3 border border-gray-200 rounded-md cursor-pointer transition';
+                optionElement.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
+                optionElement.dataset.option = index;
+                optionElement.addEventListener('click', selectOption);
+                
+                // Highlight if previously selected
+                if (selectedOptions[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update question number and progress
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('currentQuestion').textContent = currentQuestion + 1;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / quizData.questions.length) * 100}%`;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.questions.length - 1) {
+                document.getElementById('nextBtn').classList.add('hidden');
+                document.getElementById('submitBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('nextBtn').classList.remove('hidden');
+                document.getElementById('submitBtn').classList.add('hidden');
+            }
+        }
+
+        // Handle option selection
+        function selectOption(e) {
+            const selectedOption = parseInt(e.currentTarget.dataset.option);
+            selectedOptions[currentQuestion] = selectedOption;
+            
+            // Update UI
+            document.querySelectorAll('.option-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            e.currentTarget.classList.add('selected');
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateQuestion();
+            }
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < quizData.questions.length - 1) {
+                currentQuestion++;
+                updateQuestion();
+            }
+        }
+
+        // Start timer
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        // Show quiz results
+        function showResults() {
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            let correct = 0;
+            selectedOptions.forEach((selected, index) => {
+                if (selected === quizData.questions[index].answer) {
+                    correct++;
+                }
+            });
+            
+            score = Math.round((correct / quizData.questions.length) * 100);
+            
+            // Update results modal
+            document.getElementById('finalScore').textContent = `${score}%`;
+            document.getElementById('scoreBar').style.width = `${score}%`;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = quizData.questions.length - correct;
+            
+            const timeTaken = (quizData.timeLimit * 60) - timeLeft;
+            const minutesTaken = Math.floor(timeTaken / 60);
+            const secondsTaken = timeTaken % 60;
+            document.getElementById('timeTaken').textContent = `${minutesTaken}:${secondsTaken < 10 ? '0' + secondsTaken : secondsTaken}`;
+            
+            // Show modal
+            document.getElementById('resultsModal').classList.remove('hidden');
+        }
+
+        // Review answers
+        function reviewAnswers() {
+            document.getElementById('resultsModal').classList.add('hidden');
+            currentQuestion = 0;
+            
+            // Highlight correct/incorrect answers
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            const question = quizData.questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option-item p-3 border border-gray-200 rounded-md transition';
+                optionElement.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
+                
+                if (index === question.answer) {
+                    optionElement.classList.add('correct');
+                } else if (selectedOptions[currentQuestion] === index && selectedOptions[currentQuestion] !== question.answer) {
+                    optionElement.classList.add('incorrect');
+                }
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation for review mode
+            document.getElementById('prevBtn').disabled = true;
+            document.getElementById('nextBtn').classList.remove('hidden');
+            document.getElementById('submitBtn').classList.add('hidden');
+        }
+
+        // Start new quiz
+        function startNewQuiz() {
+            document.getElementById('resultsModal').classList.add('hidden');
+            // In a real app, this would redirect to the quiz selection page
+            window.location.href = 'index.html';
+        }
+
+        // Initialize the quiz when the page loads
+        window.addEventListener('DOMContentLoaded', initQuiz);
+        feather.replace();
+    </script>
+</body>
+</html>
